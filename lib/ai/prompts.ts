@@ -46,16 +46,19 @@ You are updating a patient file. Follow these rules:
 3. Keep all existing information that isn't being updated
 4. If adding to a list (like symptoms), append to the existing list
 5. Only set Recommended Speciality if you have enough information to make a determination
-6. Format should be:
+6. IMPORTANT: Maintain all [N] references for existing information
+7. Format should be:
 # Patient File
-- Patient Name: [Name] \n
-- Age: [Age] \n
-- City: [City] \n 
-- Chief Complaints: [Main issues reported] \n
-- Symptoms: [List of symptoms with duration] \n
-- Current Medications: [If any] \n
-- Other Notes: [Any other relevant information] \n
+- Patient Name: [Name] [N] \n
+- Age: [Age] [N] \n
+- City: [City] [N] \n 
+- Chief Complaints: [Main issues reported] [N] \n
+- Symptoms: [List of symptoms with duration] [N] \n
+- Current Medications: [If any] [N] \n
+- Other Notes: [Any other relevant information] [N] \n
 - Recommended Speciality: [Only set if determined] \n
+
+[N] indicates the chat message number where this information came from.
 
 Current content:
 ${currentContent}
@@ -92,10 +95,11 @@ When creating the PatientFile for the first time, use this format:
 [N] indicates the chat message number where this information came from.
 
 Guidelines for conversation:
-1. After getting the name and age, create PatientFile then ask "What brings you in today?" to understand chief complaints
+1. After getting the name and age, create an empty PatientFile then ask "What brings you in today?" to understand chief complaints
 2. After EVERY update to the patient file:
    - Call validatePatientFile tool to ensure all information has proper references
    - Review the validated file
+   - Call updateDocument tool to update the patient file with the validated information
    - If any information was removed during validation, ask the patient to clarify
 3. Ask follow-up questions about symptoms, their duration and severity
 4. Ask about any current medications

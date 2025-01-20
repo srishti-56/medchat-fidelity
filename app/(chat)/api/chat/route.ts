@@ -467,11 +467,6 @@ export async function POST(request: Request) {
                 return null;
               }).filter(Boolean);
 
-              dataStream.writeData({
-                type: 'clear',
-                content: document.title,
-              });
-
               const { fullStream } = streamText({
                 model: customModel(model.apiIdentifier),
                 system: `You are validating a patient file against chat history.
@@ -485,14 +480,6 @@ export async function POST(request: Request) {
                   facts: facts,
                   messageNumber: messageNumber
                 }),
-                experimental_providerMetadata: {
-                  openai: {
-                    prediction: {
-                      type: 'content',
-                      content: document.content,
-                    },
-                  },
-                },
               });
 
               let draftText = '';
@@ -508,8 +495,6 @@ export async function POST(request: Request) {
                 }
               }
 
-              dataStream.writeData({ type: 'finish', content: '' });
-
               if (session.user?.id) {
                 await saveDocument({
                   id: documentId,
@@ -521,10 +506,7 @@ export async function POST(request: Request) {
               }
 
               return {
-                id: documentId,
-                title: document.title,
-                kind: document.kind,
-                content: 'The patient file has been validated and updated with references.',
+                message: 'Patient file validated and updated with references',
               };
             },
           },
