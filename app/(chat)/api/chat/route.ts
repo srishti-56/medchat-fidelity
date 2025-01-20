@@ -176,13 +176,13 @@ export async function POST(request: Request) {
                   model: customModel(model.apiIdentifier),
                   system: `Create a patient file with the following format:
 # Patient File
-- Patient Name: [Name if provided] \n
-- Age: [Age if provided] \n
-- City: [City if provided] \n
-- Chief Complaints: [Main issues reported if provided] \n
-- Symptoms: [List of symptoms with duration if provided] \n
-- Current Medications: [If any provided] \n
-- Other Notes: [Any other relevant information if provided] \n
+- Patient Name: [Name if provided, else empty] \n
+- Age: [Age if provided, else empty] \n
+- City: [City if provided, else empty] \n
+- Chief Complaints: [Main issues reported if provided, else empty] \n
+- Symptoms: [List of symptoms with duration if provided, else empty] \n
+- Current Medications: [If any provided, else empty] \n
+- Other Notes: [Any other relevant information if provided, else empty] \n
 - Recommended Speciality: [To be determined after analysis]`,
                   prompt: title,
                 });

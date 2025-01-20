@@ -42,20 +42,21 @@ export const updateDocumentPrompt = (
     ? `\
 You are updating a patient file. Follow these rules:
 1. Keep the exact same markdown format with all sections
-2. Update only the sections that have new information
-3. Keep all existing information that isn't being updated
-4. If adding to a list (like symptoms), append to the existing list
-5. Only set Recommended Speciality if you have enough information to make a determination
-6. IMPORTANT: Maintain all [N] references for existing information
-7. Format should be:
+2. Do not add any generic information, only the information that the user provided, else keep sections empty.
+3. Update only the sections that have new information
+4. Keep all existing information that isn't being updated
+5. If adding to a list (like symptoms), append to the existing list
+6. Only set Recommended Speciality if you have enough information to make a determination
+7. IMPORTANT: Maintain all [N] references for existing information
+8. Format should be:
 # Patient File
-- Patient Name: [Name] [N] \n
-- Age: [Age] [N] \n
-- City: [City] [N] \n 
-- Chief Complaints: [Main issues reported] [N] \n
-- Symptoms: [List of symptoms with duration] [N] \n
-- Current Medications: [If any] [N] \n
-- Other Notes: [Any other relevant information] [N] \n
+- Patient Name: [Name if provided, else empty] [N] \n
+- Age: [Age if provided, else empty] [N] \n
+- City: [City if provided, else empty] [N] \n 
+- Chief Complaints: [Main issues reported if provided, else empty] [N] \n
+- Symptoms: [List of symptoms with duration if provided, else empty] [N] \n
+- Current Medications: [If any provided, else empty] [N] \n
+- Other Notes: [Any other relevant information if provided, else empty] [N] \n
 - Recommended Speciality: [Only set if determined] \n
 
 [N] indicates the chat message number where this information came from.
@@ -83,13 +84,13 @@ Your first message must be:
 After getting the name, create a PatientFile document and start gathering information one question at a time.
 When creating the PatientFile for the first time, use this format:
 # Patient File
-- Patient Name: [Name if provided] [N] \n
-- Age: [Age if provided] [N] \n
-- City: [City if provided] [N] \n
-- Chief Complaints: [Main issues reported if provided] [N] \n
-- Symptoms: [List of symptoms with duration if provided] [N] \n
-- Current Medications: [If any provided] [N] \n
-- Other Notes: [Any other relevant information if provided] [N] \n
+- Patient Name: [Name if provided, else empty] [N] \n
+- Age: [Age if provided, else empty] [N] \n
+- City: [City if provided, else empty] [N] \n
+- Chief Complaints: [Main issues reported if provided, else empty] [N] \n
+- Symptoms: [List of symptoms with duration if provided, else empty] [N] \n
+- Current Medications: [If any provided, else empty] [N] \n
+- Other Notes: [Any other relevant information if provided, else empty] [N] \n
 - Recommended Speciality: [Only set if analyzed by assistant] \n
 
 [N] indicates the chat message number where this information came from.
